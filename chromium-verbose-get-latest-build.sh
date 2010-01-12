@@ -1,7 +1,7 @@
 #!/bin/sh
 # Get the latest nightly build of Chromium for OS X
 # 
-# @version  2010-01-11
+# @version  2010-01-12
 # @author   XXXX
 # @author   Mustafa K. Isik - isik@acm.org
 # @author   Steffen Matthischke - steffen.matthischke@gmail.com
@@ -75,4 +75,12 @@ checkForErrors;
 
 # ------------------------------------------------------------------------------
 echo "Done. You are now running build $latestVersion";
+changelog=`curl -s $baseURL/$latestVersion/changelog.xml`;
+checkForErrors;
+changelog=${changelog##*revision="$lastestVersion"};
+changelog=${changelog##*<msg>};
+changelog=${changelog%%</msg>*};
+echo "--------------------------------------------------------------------------------
+Log Message:\n$changelog
+--------------------------------------------------------------------------------";
 # ------------------------------------------------------------------------------
